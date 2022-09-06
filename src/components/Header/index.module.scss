@@ -1,0 +1,17 @@
+// @import '../../styles/variable';
+
+.header {
+	color: $theme-color;
+	text-decoration: dashed;
+}
+
+.bold {
+	height: 20vh;
+	border: 1px dashed yellowgreen;
+	.content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+    height: 20vh;
+	}
+}

@@ -2,12 +2,25 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+import {Header} from './components/Header';
+
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <div>
+      <Header />
+
+      <button 
+        bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+        text="sm white"
+        font="mono light"
+      p="y-2 x-4"
+      border="2 rounded blue-200"
+      >
+        Button
+    </button>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
@@ -26,7 +39,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </div>
   )
 }
