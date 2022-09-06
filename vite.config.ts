@@ -28,6 +28,7 @@ export default defineConfig({
     windi(),
     viteEslint(),
     viteStylelint({
+      // 对 某些文件进行排查
       exclude: /windicss|node_modules/
     })
   ],
