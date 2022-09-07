@@ -20,9 +20,11 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error',
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+    'prettier/prettier': 'off',
+    // quotes: ['error', 'single'],
+    quotes: "off",
+    // semi: ['error', 'always'],
+    semi: "off",
     'react/react-in-jsx-scope': 'off'
   }
 };

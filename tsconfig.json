@@ -14,8 +14,12 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true, // 表示只做类型检查 而不会输出产物文件，与tsc --noEmit 命令等效
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "types": ["vite-plugin-svgr/client"]
 	},
 	"include": ["src"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"references": [{ "path": "./tsconfig.node.json" }],
 }
