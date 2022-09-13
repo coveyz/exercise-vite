@@ -46,7 +46,7 @@ export default defineConfig({
       exclude: /windicss|node_modules/
     }),
     createSvgIconsPlugin({
-      iconDirs: [path.join(__dirname,'src/assets/icons')]
+      iconDirs: [path.join(__dirname, 'src/assets/icons')]
     })
   ],
   // css 相关配置
@@ -75,5 +75,19 @@ export default defineConfig({
   // base: isProduction ? CDN_URL : '/'
   build: {
     assetsInlineLimit: 8 * 1024
+  },
+  //todo 
+  server: {
+    force: true
+  },
+  optimizeDeps: {
+    // entries: ['./src/main.tsx'] // 为一个字符串数组
+    entries: ['**/*.vue'], // 将所有的 .vue 文件作为扫描入口
+    include: ['loadsh-es', 'vue', 'object-assign'], // 
+    esbuildOptions: {
+      plugins: [
+        // 加入 Esbuild 插件
+      ] 
+    }
   }
 });
