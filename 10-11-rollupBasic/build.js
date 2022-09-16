@@ -2,6 +2,7 @@ const rollup = require('rollup');
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const { terser } = require('rollup-plugin-terser');
+const util = require('util');
 
 // inputOptions -配置
 const inputOptions = {
@@ -35,6 +36,19 @@ const outputOptionsList = [
 // 		format: 'cjs',
 // 	},
 // ];
+
+async function buildTest() {
+	const bundle = await rollup.rollup({
+		input: ['./src/index.js'],
+	});
+	const result = await bundle.generate({
+		format: 'es',
+	});
+
+	console.log('result=>', result);
+}
+
+buildTest();
 
 async function generateOutputOptions(bundle) {
 	for (const outputOptions of outputOptionsList) {
@@ -78,4 +92,4 @@ async function build() {
 	process.exit(bundleFailed ? 1 : 0);
 }
 
-build();
+// build();
