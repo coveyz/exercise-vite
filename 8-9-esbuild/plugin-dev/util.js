@@ -1,3 +1,7 @@
+/**
+ ** eg: https://github.com/sanyuan0704/ewas/blob/main/packages/esbuild-plugin-html/src/index.ts
+ */
+
 const createScript = (src) => `<script type="module" src="${src}"></script>`;
 const createLink = (src) => `<link rel="stylesheet" href="${src}"></link>`;
 
