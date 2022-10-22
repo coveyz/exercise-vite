@@ -1,0 +1,24 @@
+{
+  "name": "tsup-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "pnpm run build -- --watch src",
+    "build": "tsup ./src/index.ts --format cjs,esm --dts --clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "exports": {
+    ".": {
+      "import": "./src/index.mjs",
+      "require": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "tsup": "^6.3.0",
+    "typescript": "^4.8.4"
+  }
+}
