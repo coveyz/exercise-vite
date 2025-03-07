@@ -7,7 +7,7 @@
     "mini-vite": "bin/mini-vite"
   },
   "scripts": {
-    "start": "tsup --watch",
+    "start": "DEBUG=dev tsup --watch",
     "build": "tsup --minify"
   },
   "keywords": [],
@@ -18,13 +18,12 @@
     "chokidar": "^4.0.3",
     "connect": "^3.7.0",
     "debug": "^4.4.0",
-    "es-module-lexer": "^1.6.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.14.38",
     "fs-extra": "^11.3.0",
-    "magic-string": "^0.30.17",
+    "magic-string": "^0.26.1",
     "picocolors": "^1.1.1",
     "resolve": "^1.22.10",
-    "rollup": "^4.34.9",
+    "rollup": "^2.70.2",
     "sirv": "^3.0.1",
     "ws": "^8.18.1"
   },
@@ -34,6 +33,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/resolve": "^1.20.6",
     "@types/ws": "^8.5.14",
+    "es-module-lexer": "^0.10.5",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   }

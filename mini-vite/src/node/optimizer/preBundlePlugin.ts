@@ -48,8 +48,6 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
                     const code = await fs.readFile(entryPath, 'utf-8');
                     const [imports, exports] = parse(code);
                     let proxyModule: string[] = [];
-                    console.log('imports, exports=>', { imports, exports })
-
                     // cjs
                     if (!imports.length && !exports.length) {
                         // 构建 代理模块
@@ -73,7 +71,7 @@ export function preBundlePlugin(deps: Set<string>): Plugin {
 
                     debug("Proxy module content: %o", proxyModule.join("\n"));
                     const loader = path.extname(entryPath).slice(1);
-                    console.log('proxyModule=>', proxyModule)
+                    // console.log('proxyModule=>', proxyModule)
                     return {
                         loader: loader as Loader,
                         contents: proxyModule.join("\n"),
