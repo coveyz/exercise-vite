@@ -49,11 +49,11 @@ export function importAnalysisPlugin(): Plugin {
 
                 if (!modSource) continue;
                 // 静态资源
-                // if (modSource.endsWith('.svg')) {
-                //     const resolvedUrl = await resolve(modSource, id);
-                //     ms.overwrite(modStart, modEnd, `${resolvedUrl}?import`);
-                //     continue;
-                // };
+                if (modSource.endsWith('.svg')) {
+                    const resolvedUrl = await resolve(modSource, id);
+                    ms.overwrite(modStart, modEnd, `${resolvedUrl}?import`);
+                    continue;
+                };
                 // 第三方库
                 if (BARE_IMPORT_RE.test(modSource)) {
                     const bundlePath = normalizePath(

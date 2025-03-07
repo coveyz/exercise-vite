@@ -43,7 +43,7 @@ export async function startDevServer() {
 
     app.use(transformMiddleware(serverContext));
 
-    // app.use(staticMiddleware(serverContext.root));
+    app.use(staticMiddleware(serverContext.root));
 
     app.listen(3000, async () => {
         await optimize(root);

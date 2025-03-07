@@ -10,7 +10,7 @@ export function resolvePlugins(): Plugin[] {
         resolvePlugin(),
         esbuildTransformPlugin(),
         importAnalysisPlugin(),
-        // cssPlugin(),
-        // assetPlugin(),
+        cssPlugin(),
+        assetPlugin(),
     ]
 }

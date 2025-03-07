@@ -48,8 +48,8 @@ export function transformMiddleware(serverContext: ServerContext): NextHandleFun
         //transform JS request
         if (
             isJSRequest(url)
-            // || isCSSRequest(url)
-            // || isImportRequest(url)
+            || isCSSRequest(url)
+            || isImportRequest(url)
         ) {
             let result = await transformRequest(url, serverContext);
 
