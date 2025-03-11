@@ -40,6 +40,9 @@ export function importAnalysisPlugin(): Plugin {
                 return resolvedId;
             };
 
+            const { moduleGraph } = serverContext;
+            const curMod = moduleGraph.getModuleById(id)!;
+            const importedModules = new Set<string>();
 
             // 对每一个 import 语句进行分析
             for (const importInfo of imports) {
@@ -60,16 +63,25 @@ export function importAnalysisPlugin(): Plugin {
                         path.join('/', PRE_BUNDLE_DIR, `${modSource}.js`)
                     );
                     ms.overwrite(modStart, modEnd, bundlePath);
+
+                    // console.log('bundlePath=>', bundlePath);
+
+                    importedModules.add(bundlePath);
                 }
                 else if (modSource.startsWith('.') || modSource.startsWith('/')) {
                     // 直接调用上下文的 resolve方法 会自动经过路径解析插件的处理
                     const resolved = await resolve(modSource, id);
 
+                    // console.log('resolved=>', resolved);
+
                     if (resolved) {
                         ms.overwrite(modStart, modEnd, resolved);
+                        importedModules.add(resolved);
                     }
                 }
             }
+
+            moduleGraph.updateModuleInfo(curMod, importedModules)
 
             return {
                 code: ms.toString(),

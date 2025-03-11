@@ -12,18 +12,26 @@ export async function transformRequest(
     url: string,
     serverContext: ServerContext
 ) {
-    const { pluginContainer } = serverContext;
+    const { pluginContainer, moduleGraph } = serverContext;
     url = cleanUrl(url);
+
+    let mod = await moduleGraph.getModuleByUrl(url);
+
+    if (mod && mod.transformResult) {
+        return mod.transformResult;
+    }
+
     // 依次调用插件容器的  resolveId load transform 方法
     const resolveResult = await pluginContainer.resolveId(url);
 
     let transformResult;
-
     if (resolveResult?.id) {
         let code = await pluginContainer.load(resolveResult.id);
         if (typeof code === 'object' && code !== null) {
             code = code.code;
         };
+
+        mod = await moduleGraph.ensureEntryFromUrl(url);
 
         if (code) {
             transformResult = await pluginContainer.transform(
@@ -31,6 +39,10 @@ export async function transformRequest(
                 resolveResult?.id
             )
         };
+
+        if (mod) {
+            mod.transformResult = transformResult
+        }
     };
 
     return transformResult;
@@ -61,6 +73,8 @@ export function transformMiddleware(serverContext: ServerContext): NextHandleFun
             if (result && typeof result !== 'string') {
                 result = result.code;
             };
+
+
 
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/javascript');

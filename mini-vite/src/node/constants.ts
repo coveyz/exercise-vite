@@ -31,3 +31,7 @@ export const QUERY_RE = /\?.*$/s;
 
 export const JS_TYPES_RE = /\.(?:j|t)sx?$|\.mjs$/;
 export const DEFAULT_EXTENSIONS = [".tsx", ".ts", ".jsx", "js"];
+
+export const HMR_PORT = 13579;
+
+export const CLIENT_PUBLIC_PATH = "/@vite/client";
