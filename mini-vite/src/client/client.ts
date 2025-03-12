@@ -13,7 +13,7 @@ const socket = new WebSocket(`ws://localhost:__HMR_PORT__`, "vite-hmr");
 
 // 2. 根据不同类型进行更新
 async function handleMessage(payload: any) {
-    console.log('handleMessage=>', payload);
+    console.log('handleMessage=>', payload, hotModulesMap);
     switch (payload.type) {
         case 'connected': {
             console.log("[vite] connected.");
@@ -146,4 +146,34 @@ async function fetchUpdate({ path, timestamp }: Update) {
 
         console.log(`[vite] hot updated: ${path}`);
     };
+};
+
+
+
+const sheetsMap = new Map();
+
+export function updateStyle(id: string, content: string) {
+    let style = sheetsMap.get(id);
+
+    if (!style) {
+        // 添加 style 标签
+        style = document.createElement('style');
+        style.setAttribute('type', 'text/css');
+        style.innerHTML = content;
+        document.head.appendChild(style);
+    } else {
+        style.innerHTML = content;
+    }
+
+    sheetsMap.set(id, style);
+};
+
+export function removeStyle(id: string): void {
+    const style = sheetsMap.get(id);
+    if (style) {
+        document.head.removeChild(style);
+    }
+
+    sheetsMap.delete(id);
 }
+
