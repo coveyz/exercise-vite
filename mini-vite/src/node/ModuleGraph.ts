@@ -32,7 +32,7 @@ export class ModuleGraph {
         const resolveId = resolved?.id || url;
         return { url, resolveId }
     }
-
+    /** 获取 资源绝对路径 */
     getModuleById(id: string): ModuleNode | undefined {
         return this.idModuleMap.get(id);
     }

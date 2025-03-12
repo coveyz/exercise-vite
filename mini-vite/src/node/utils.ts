@@ -1,7 +1,7 @@
 import os from 'os';
 import path from 'path'
 
-import { HASH_RE, QUERY_RE, JS_TYPES_RE } from './constants';
+import { HASH_RE, QUERY_RE, JS_TYPES_RE, INTERNAL_LIST } from './constants';
 
 export const slash = (path: string) => {
     const isExtendedLengthPath = /^\\\\\?\\/.test(path);
@@ -40,12 +40,17 @@ export const isImportRequest = (url: string): boolean => {
     return url.endsWith('?import');
 }
 
+export const isInternalRequest = (url: string): boolean => {
+    return INTERNAL_LIST.includes(url);
+}
+
 export const removeImportQuery = (url: string) => {
     return url.replace(/\?import$/, "");
 };
 
 export const getShortName = (file: string, root: string) => {
-    return file.startsWith(root + '/')  
+    return file.startsWith(root + '/')
         ? path.posix.relative(root, file)
         : file;
-}
+};
+

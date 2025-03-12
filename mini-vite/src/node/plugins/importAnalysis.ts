@@ -2,8 +2,8 @@ import path from 'path'
 import { init, parse } from 'es-module-lexer';
 import MagicString from 'magic-string'
 
-import { BARE_IMPORT_RE, DEFAULT_EXTENSIONS, PRE_BUNDLE_DIR } from '../constants';
-import { cleanUrl, getShortName, isJSRequest, normalizePath } from "../utils";
+import { BARE_IMPORT_RE, DEFAULT_EXTENSIONS, PRE_BUNDLE_DIR, CLIENT_PUBLIC_PATH } from '../constants';
+import { cleanUrl, getShortName, isJSRequest, normalizePath, isInternalRequest } from "../utils";
 import type { Plugin } from '../plugin'
 import type { ServerContext } from '../server';
 
@@ -20,7 +20,7 @@ export function importAnalysisPlugin(): Plugin {
         async transform(code: string, id: string) {
             // console.log('importAnalysisPlugin-transform=>', { code, id });
             // 只处理 JS请求
-            if (!isJSRequest(id)) return null;
+            if (!isJSRequest(id) || isInternalRequest(id)) return null;
 
             await init;
             // 解析 import
@@ -34,8 +34,13 @@ export function importAnalysisPlugin(): Plugin {
                     normalizePath(importer)
                 );
                 if (!resolved) return;
-
+                const cleanedId = cleanUrl(resolved.id);
+                const mod = moduleGraph.getModuleById(cleanedId);
                 let resolvedId = `/${getShortName(resolved.id, serverContext.root)}`;
+
+                if (mod && mod.lastHMRTimeStamp > 0) {
+                    resolvedId += "?t=" + mod.lastHMRTimeStamp;
+                }
 
                 return resolvedId;
             };
@@ -79,6 +84,16 @@ export function importAnalysisPlugin(): Plugin {
                         importedModules.add(resolved);
                     }
                 }
+            }
+
+            // 只对业务代码 源码注入
+            if (!id.includes('node_modules')) {
+                ms.prepend(
+                    `import { createHotContext as __vite__createHotContext } from "${CLIENT_PUBLIC_PATH}";` +
+                    `import.meta.hot = __vite__createHotContext(${JSON.stringify(
+                        cleanUrl(curMod.url)
+                    )});`
+                )
             }
 
             moduleGraph.updateModuleInfo(curMod, importedModules)

@@ -35,3 +35,5 @@ export const DEFAULT_EXTENSIONS = [".tsx", ".ts", ".jsx", "js"];
 export const HMR_PORT = 13579;
 
 export const CLIENT_PUBLIC_PATH = "/@vite/client";
+
+export const INTERNAL_LIST = [CLIENT_PUBLIC_PATH, "/@react-refresh"];

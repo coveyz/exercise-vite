@@ -17,7 +17,7 @@ function App() {
           </button>
         </p>
         <p>
-          Edit <code>App</code> and save e test.
+          {/* Edit <code>App</code> and save e test. */}
         </p>
         <p>
           <a
